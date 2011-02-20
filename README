@@ -1,4 +1,8 @@
 This is my reimplementation of iaindooley's "pickdrop" utility.
+
+Pick each file you want and then just drop them all into the same directory.
+Saves heaps of typing when you're moving lots of files at once.
+
 Installation:
 Requires python.
 copy each file to /usr/bin and set permissions to 755

@@ -1,0 +1,44 @@
+#!/usr/bin/python
+'''
+drop [directory]
+copies files/directories listed in ~/.pick to the current directory unless
+a different directory is specified.
+If an error is encountered, drop will terminate, rewriting the ~/.pick file
+up to where the error was encountered.
+'''
+
+import os
+import sys
+import subprocess
+
+try:
+    fin = open(os.getenv('HOME')+'/.pick', 'r')
+except IOError:
+    print('ERROR: no ~/.pick file found')
+    sys.exit(1)
+
+#is the directory relative or absolute?
+try:
+    outdir = sys.argv[1]
+    if outdir[0] != '/':
+        outdir = os.getcwd() + '/' + outdir
+except IndexError:
+    outdir = os.getcwd()
+
+lines = fin.readlines()
+i = 0
+for line in lines:
+    p = subprocess.Popen(['cp', '-r', '-v', line[:-1], outdir], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    retcode = p.wait()
+    print(p.stdout.read())
+    if retcode != 0:    #drop has not been successful, die
+        print('ERROR: aborting')
+        fout = open(os.getenv('HOME')+'/.pick', 'w')
+        for x in lines[i:]: #write out remaining files to drop
+            fout.write(x)
+        fout.close()
+        sys.exit(1)
+    i += 1
+#drop has been successful, remove ~/.pick file
+os.remove(os.getenv('HOME')+'/.pick')
+

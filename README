@@ -1,0 +1,21 @@
+This is my reimplementation of iaindooley's "pickdrop" utility.
+Installation:
+Requires python.
+copy each file to /usr/bin and set permissions to 755
+
+Usage:
+First pick the objects(files or directories) that you wish to copy/move,
+these may be relative or absolute
+    pick object1 [object2 object3...]
+Next, copy all your objects into their destination
+    drop
+Alternativly you may rather move your objects
+    dropmv
+You may wish to specify a path to copy to
+    drop /home/username/somedirectory
+or
+    drop somedirectory
+
+If you need to reset pick, just clear remove ~/.pick
+
+Andrew Kampjes

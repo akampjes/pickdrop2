@@ -1,0 +1,17 @@
+#!/usr/bin/python
+'''
+usage:
+    pick object1 [object2...]
+objects may be files or directories.
+list of objects to drop are stored in ~/.pick
+'''
+
+import sys
+import os
+
+fout = open(os.getenv('HOME')+'/.pick', 'a')
+
+for arg in sys.argv[1:]:
+    if arg[0] != '/':
+        arg = os.getcwd() + '/' + arg + '\n'
+    fout.write(arg)
